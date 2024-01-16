@@ -1,8 +1,9 @@
-input {
+input,
+input:focus {
   outline: none;
 }
 
-.container4-container {
+.container5-container {
   flex: 0 0 auto;
   width: auto;
   height: 40px;
@@ -17,7 +18,7 @@ input {
   flex-direction: row;
   background-color: var(--dl-color-primary-500);
 }
-.container4-container1 {
+.container5-container1 {
   flex: 0 0 auto;
   width: 40px;
   height: 100%;
@@ -29,19 +30,19 @@ input {
   justify-content: center;
   background-color: var(--dl-color-gray-white);
 }
-.container4-icon {
+.container5-icon {
   fill: var(--dl-color-primary-500);
   width: 24px;
   height: 24px;
 }
-.container4-container2 {
+.container5-container2 {
   flex: 0 0 auto;
   width: auto;
   height: auto;
   display: flex;
   align-items: flex-start;
 }
-.container4-link {
+.container5-link {
   color: rgb(245, 244, 244);
   font-style: normal;
   font-weight: 700;
@@ -49,24 +50,26 @@ input {
   margin-right: 10px;
 }
 @media (max-width: 991px) {
-  .container4-container {
+  .container5-container {
     border-radius: var(--dl-radius-radius-radius4);
   }
-  .container4-container1 {
+  .container5-container1 {
     border-radius: var(--dl-radius-radius-radius4);
   }
 }
 @media (max-width: 479px) {
-  .container4-container {
+  .container5-container {
+    z-index: 100;
     margin-top: 40px;
     border-radius: var(--dl-radius-radius-radius4);
   }
-  .container4-container1 {
+  .container5-container1 {
+    z-index: 100;
     border-radius: var(--dl-radius-radius-radius4);
   }
 }
 
-.signup-page-container {
+.login-page-container {
   width: 100%;
   display: flex;
   overflow: auto;
@@ -77,7 +80,7 @@ input {
   /* background-color: var(--dl-color-danger-700); */
   background-color: #556b2f;
 }
-.signup-page-container1 {
+.login-page-container1 {
   width: 881px;
   height: 600px;
   display: flex;
@@ -87,12 +90,12 @@ input {
   align-items: center;
   border-radius: 40px;
   background-size: cover;
-  justify-content: center;
+  justify-content: flex-start;
   background-image: url("../assets/_230a6a52-bb4c-4906-bdef-1f29b49e58cb-1100h.jpg");
   background-repeat: no-repeat;
   background-position: center;
 }
-.signup-page-container2 {
+.login-page-container2 {
   flex: 0 0 auto;
   width: 50%;
   height: 100%;
@@ -100,7 +103,7 @@ input {
   align-items: flex-start;
   flex-direction: column;
 }
-.signup-page-container3 {
+.login-page-container3 {
   width: 196px;
   height: 198px;
   display: flex;
@@ -113,12 +116,12 @@ input {
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.79);
 }
-.signup-page-image {
+.login-page-image {
   width: 200px;
   object-fit: cover;
   border-radius: var(--dl-radius-radius-round);
 }
-.signup-page-container4 {
+.login-page-container4 {
   width: 337px;
   height: 230px;
   display: flex;
@@ -131,33 +134,30 @@ input {
   flex-direction: column;
   justify-content: center;
 }
-.signup-page-text {
+.login-page-text {
   color: var(--dl-color-gray-white);
   font-size: 30px;
   font-style: normal;
   text-align: center;
   font-weight: 300;
 }
-.signup-page-text3 {
+.login-page-text3 {
   color: var(--dl-color-danger-500);
 }
-.signup-page-text4 {
+.login-page-text4 {
   color: var(--dl-color-danger-500);
 }
-.signup-page-text5 {
+.login-page-text5 {
   color: var(--dl-color-danger-500);
 }
-.signup-page-text6 {
-  color: var(--dl-color-danger-500);
-}
-.signup-page-container5 {
+.login-page-container5 {
   flex: 0 0 auto;
   width: 50%;
   height: 100%;
   display: flex;
   position: relative;
   align-items: center;
-  margin-right: 0px;
+  margin-right: var(--dl-space-space-halfunit);
   border-radius: 20px;
   flex-direction: column;
   justify-content: center;
@@ -165,9 +165,9 @@ input {
   border-top-right-radius: 40px;
   border-bottom-right-radius: 40px;
 }
-.signup-page-container6 {
+.login-page-container6 {
   width: 326px;
-  height: 572px;
+  height: 434px;
   display: flex;
   position: relative;
   align-self: center;
@@ -176,39 +176,29 @@ input {
   margin-bottom: 40px;
   flex-direction: column;
 }
-.signup-page-label {
+.login-page-label {
   color: var(--dl-color-gray-white);
   font-size: 50px;
   align-self: center;
   font-style: normal;
   margin-top: 20px;
   font-weight: 800;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   text-transform: uppercase;
 }
-.signup-page-textinput {
+.login-page-textinput {
   color: var(--dl-color-gray-white);
   width: 100%;
   align-self: center;
+  margin-top: 10px;
   border-color: var(--dl-color-gray-white);
   border-width: 0px;
   border-radius: 0px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   background-color: rgba(255, 255, 255, 0);
   border-bottom-width: 1px;
 }
-.signup-page-textinput1 {
-  color: var(--dl-color-gray-white);
-  width: 100%;
-  align-self: center;
-  border-color: var(--dl-color-gray-white);
-  border-width: 0px;
-  border-radius: 0px;
-  margin-bottom: 25px;
-  background-color: rgba(255, 255, 255, 0);
-  border-bottom-width: 1px;
-}
-.signup-page-textinput2 {
+.login-page-textinput1 {
   color: var(--dl-color-gray-white);
   width: 100%;
   align-self: center;
@@ -218,134 +208,120 @@ input {
   background-color: rgba(255, 255, 255, 0);
   border-bottom-width: 1px;
 }
-.signup-page-textinput3 {
+.login-page-link {
   color: var(--dl-color-gray-white);
-  width: 100%;
-  align-self: center;
-  margin-top: 25px;
-  border-color: var(--dl-color-gray-white);
-  border-width: 0px;
-  border-radius: 0px;
-  background-color: rgba(255, 255, 255, 0);
-  border-bottom-width: 1px;
+  align-self: flex-start;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
-.signup-page-button {
-  color: rgb(253, 251, 251);
+.login-page-button {
+  color: #fdfbfb;
   width: 100%;
   font-size: 25px;
   align-self: center;
   font-style: normal;
-  margin-top: 40px;
+  margin-top: 20px;
   font-weight: 700;
   border-width: 0px;
   border-radius: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   background-image: linear-gradient(
     90deg,
     rgb(189, 195, 199) 0%,
     rgb(74, 153, 232) 100%
   );
 }
-.signup-page-link {
+.login-page-link1 {
   color: var(--dl-color-gray-white);
   align-self: center;
 }
 @media (max-width: 991px) {
-  .signup-page-container1 {
+  .login-page-container {
+    justify-content: center;
+  }
+  .login-page-container1 {
     width: 844px;
-    height: 600px;
     position: static;
   }
-  .signup-page-container4 {
+  .login-page-container4 {
     width: 343px;
     height: 203px;
     margin-top: 25px;
   }
-  .signup-page-text {
+  .login-page-text {
     color: var(--dl-color-gray-white);
     width: 100%;
     font-size: 30px;
     font-style: normal;
     font-weight: 300;
   }
-  .signup-page-container6 {
-    width: 305px;
+  .login-page-text2 {
+    color: var(--dl-color-danger-500);
   }
-  .signup-page-link {
-    color: var(--dl-color-gray-white);
+  .login-page-text3 {
+    color: var(--dl-color-danger-500);
+  }
+  .login-page-text4 {
+    color: var(--dl-color-danger-500);
+  }
+  .login-page-text5 {
+    color: var(--dl-color-danger-500);
+  }
+  .login-page-container6 {
+    width: 305px;
   }
 }
 @media (max-width: 767px) {
-  .signup-page-container1 {
-    width: 641px;
-    height: 500px;
+  .login-page-container {
+    justify-content: center;
   }
-  .signup-page-container2 {
+  .login-page-container1 {
+    width: 641px;
+    height: 488px;
+  }
+  .login-page-container2 {
     width: 296px;
-    height: 100%;
     position: relative;
   }
-  .signup-page-container3 {
+  .login-page-container3 {
     top: 0px;
     left: 63px;
     bottom: 0px;
     margin: auto;
     position: absolute;
   }
-  .signup-page-container4 {
+  .login-page-container4 {
     width: 322px;
   }
-  .signup-page-text {
+  .login-page-text {
     display: none;
   }
-  .signup-page-container5 {
+  .login-page-container5 {
     width: 346px;
     margin-right: 0px;
-    background-color: rgba(82, 66, 66, 0.51);
   }
-  .signup-page-container6 {
-    width: 275px;
-  }
-  .signup-page-label {
-    margin-bottom: 10px;
-  }
-  .signup-page-button {
-    margin-top: 20px;
-    margin-bottom: 20px;
+  .login-page-container6 {
+    width: 225px;
   }
 }
 @media (max-width: 479px) {
-  .signup-page-container1 {
+  .login-page-container1 {
     width: 100%;
     height: 1002px;
     position: static;
     border-radius: 0px;
     padding-right: 0px;
   }
-  .signup-page-container2 {
+  .login-page-container2 {
     display: none;
   }
-  .signup-page-container5 {
+  .login-page-container5 {
     width: 100%;
     border-radius: 0px;
-    background-color: rgba(82, 66, 66, 0.5);
+    background-color: rgba(82, 66, 66, 0.35);
   }
-  .signup-page-container6 {
+  .login-page-container6 {
     width: 323px;
+    height: 430px;
   }
-  .signup-page-button {
-    margin-top: 40px;
-    margin-bottom: 40px;
-  }
-}
-
-.signup-page-textinput1,
-.signup-page-textinput2 {
-  outline: none;
-}
-
-.signup-page-textinput1,
-.signup-page-textinput2 {
-  outline: none;
-  background: transparent;
 }

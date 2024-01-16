@@ -1,5 +1,5 @@
 <template>
-  <footer class="text-center text-lg-start text-white">
+  <footer class="text-center text-lg-start text-white" v-if="correctPage">
     <!-- style="background-color: #929fba" -->
     <!-- Grid container -->
     <div class="container p-4 pb-0">
@@ -50,48 +50,52 @@
             <p>
               <i class="fa fa-home mr-3"></i> Hazratbal, Srinagar J&K 190006, IN
             </p>
-            <p><i class="fa fa-envelope mr-3"></i> info@gmail.com</p>
+            <p><i class="fa fa-envelope mr-3"></i> delightdeheaven@gmail.com</p>
             <p><i class="fa fa-phone mr-3"></i> +91 7006621040</p>
-            <p><i class="fa fa-phone mr-3"></i> +91 9596269992</p>
+            <!-- <p><i class="fa fa-phone mr-3"></i> +91 9596269992</p> -->
           </div>
           <!-- Grid column -->
 
           <!-- Grid column -->
           <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-            <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+            <h6 class="text-uppercase mb-4 font-weight-bold">Our socials</h6>
 
             <!-- Facebook -->
-            <a
+            <!-- <a
               class="btn btn-primary btn-floating m-1"
               style="background-color: #3b5998"
               href="#!"
               role="button"
               ><i class="fa fa-facebook-f"></i
-            ></a>
+            ></a> -->
 
             <!-- Twitter -->
-            <a
+            <!-- <a
               class="btn btn-primary btn-floating m-1"
               style="background-color: #55acee"
               href="#!"
               role="button"
               ><i class="fa fa-twitter"></i
-            ></a>
+            ></a> -->
 
-            <!-- Google -->
+            <!-- Google
             <a
               class="btn btn-primary btn-floating m-1"
               style="background-color: #dd4b39"
               href="#!"
               role="button"
               ><i class="fa fa-google"></i
-            ></a>
+            ></a> -->
 
             <!-- Instagram -->
             <a
-              class="btn btn-primary btn-floating m-1"
-              style="background-color: #ac2bac"
-              href="https://www.instagram.com/gul_danish_"
+              class="btn btn-primary btn-floating m-1 insta-icon"
+              style="
+                background-color: #ac2bac;
+                background-color: transparent;
+                border: none;
+              "
+              href="https://www.instagram.com/delightdeheaven"
               role="button"
               ><i class="fa fa-instagram"></i
             ></a>
@@ -117,16 +121,56 @@
   </footer>
 </template>
 
+<script>
+export default {
+  computed: {
+    correctPage() {
+      if (
+        this.$route.path == "/register" ||
+        // this.$route.path == "/product" ||
+        this.$route.path == "/login"
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  },
+};
+</script>
+
 <style>
 footer {
   padding: 1em;
   /* background-color: #33691e; */
   /* background: #c35959; */
-  background-color: rgb(49, 3, 3);
+  /* background-color: rgb(49, 3, 3); */
+  /* background-color: #220202; */
+  background-color: #556b2f;
   color: white;
 }
 
 footer .container-fluid {
   margin: 0;
+}
+
+.fa-instagram {
+  font-size: 40px;
+  border: none;
+  background: linear-gradient(to top right, #f9ce34, #ee2a7b, #6228d7);
+  color: transparent;
+  mix-blend-mode: screen;
+  background-clip: text;
+  border: none;
+}
+
+.insta-icon {
+  outline: none;
+  border: none;
+}
+
+.insta-icon:active {
+  outline: none;
+  border: none;
 }
 </style>

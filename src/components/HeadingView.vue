@@ -43,7 +43,7 @@
   border: none;
   border-radius: 42px;
   padding: 12px 18px;
-  border: 1px solid rgb(49, 3, 3);
+  /* border: 1px solid rgb(49, 3, 3); */
   font-weight: bold;
   font-size: 18px;
   cursor: pointer;
@@ -52,11 +52,13 @@
 .sub-heading *:hover {
   scale: 1.02;
   transition: all 0.1s;
+  color: white;
 }
 
-.sub-heading :first-child {
+.sub-heading * {
   /* background-color: navy; */
-  background: rgb(49, 3, 3);
+  /* background: rgb(49, 3, 3); */
+  background-color: #556b2f;
   color: white;
 }
 

@@ -1,13 +1,23 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-// import Navbar from "../components/NavBar.vue";
-import SignupPage from "../components/SignupPage.vue";
-import NotFound from "../components/404.vue";
-// import ProductsPage from "../components/ProductsPage.vue";
-import SupportPage from "../components/SupportPage.vue";
+import SignupPage from "../views/SignupPage.vue";
+import NotFound from "../views/404.vue";
+import SupportPage from "../views/SupportPage.vue";
 import ProductPage from "../components/ProductView.vue";
-import CardView from "../components/CardView.vue";
-// import SignupPage from "../components/signup/styles/SignupPage.vue";
+import CardView from "@/views/ProductLandingPage.vue";
+import LoginView from "@/views/LoginPage.vue";
+import CartView from "@/views/Cart.vue";
+import { auth } from "@/main";
+
+const getCurrentUser = () => {
+  return auth.currentUser;
+};
+
+/*
+In many programming languages, a single exclamation mark (!) is a logical NOT operator, 
+which means it reverses the boolean value of the operand.
+Applying it twice (!!) essentially converts any truthy or falsy
+value to its corresponding boolean representation. */
 
 const routes = [
   {
@@ -15,12 +25,7 @@ const routes = [
     name: "home",
     component: HomeView,
   },
-  {
-    path: "/about",
-    name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-  },
+
   // {
   //   path: "/navbar",
   //   name: "navbar",
@@ -30,6 +35,11 @@ const routes = [
     path: "/register",
     name: "register",
     component: SignupPage,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView,
   },
 
   {
@@ -48,6 +58,29 @@ const routes = [
     path: "/product",
     name: "product",
     component: ProductPage,
+  },
+  // {
+  //   path: "/profile",
+  //   name: "profile",
+  //   component: ProfileView,
+  //   meta: {
+  //     requiresAuth: true,
+  //   },
+  // },
+  {
+    path: "/cart",
+    name: "cart",
+    component: CartView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+
+  {
+    path: "/reset",
+    name: "reset-password",
+    component: import("@/views/ResetView.vue"),
+    requiresAuth: true,
   },
   // { path: "/404", component: NotFound },
   { path: "/:pathMatch(.*)*", component: NotFound },

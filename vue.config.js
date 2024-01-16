@@ -12,12 +12,19 @@ module.exports = defineConfig({
       template: "public/index.html",
       filename: "index.html",
     },
-    upload: {
-      entry: "src/file upload/main.js",
-      template: "public/file upload/index.html",
-      filename: "upload/index.html",
-    },
+    // upload: {
+    //   entry: "src/file upload/main.js",
+    //   template: "public/file upload/index.html",
+    //   filename: "upload/index.html",
+    // },
   },
+  // pages: {
+  // file_upload: {
+  //   entry: "src/components/file_upload/main.js",
+  //   template: "public/file upload/index.html",
+  //   filename: "file_upload/index.html",
+  // },
+  // },
 
   // pages: {
   // index: {

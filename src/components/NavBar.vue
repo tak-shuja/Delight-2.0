@@ -27,69 +27,116 @@
         </div>
         <ul class="nav-links">
           <li>
-            <router-link :to="{ name: 'home' }">Home</router-link>
+            <router-link :to="{ name: 'home' }" @click="closeRespTab"
+              >Home</router-link
+            >
           </li>
           <li>
-            <router-link :to="{ name: 'products' }">Products</router-link>
+            <router-link :to="{ name: 'products' }" @click="closeRespTab"
+              >Products</router-link
+            >
           </li>
           <!-- <li><router-link :to="{ name: 'product' }">PRODUCT</router-link></li> -->
           <li>
-            <router-link :to="{ name: 'support' }">Support</router-link>
+            <router-link :to="{ name: 'support' }" @click="closeRespTab"
+              >Support
+            </router-link>
           </li>
-          <span class="icon-label" onclick="alert('Work in progress')">
-            <span
+
+          <li>
+            <router-link :to="{ name: 'cart' }" @click="closeRespTab"
+              >Cart
+            </router-link>
+          </li>
+
+          <!-- <a class="icon-label" @click="$router.push('/cart')">
+            <span class="nav-links"> Shopping cart </span> -->
+          <!-- <span
               class="material-symbols-outlined"
               id="shopping-cart-icon-resp"
+              @click="$router.push('/cart')"
+              style="cursor: pointer"
+              title="Your Cart"
             >
               shopping_cart
-            </span>
-            <span class="icon-text"> Shopping cart </span>
-          </span>
+            </span> -->
+          <!-- </a> -->
         </ul>
 
         <div class="search-tab">
           <input
             type="search"
-            name=""
-            id=""
+            v-model="searchQuery"
             class="search-bar"
             placeholder="search..."
+            @keyup.enter="searchItems"
           />
-          <span class="material-symbols-outlined search-icon" title="search">
+          <span
+            class="material-symbols-outlined search-icon"
+            title="search"
+            @click="searchItems"
+          >
             search
           </span>
         </div>
 
         <div class="profile-tab">
-          <span class="material-symbols-outlined" id="shopping-cart-icon">
+          <span
+            class="material-symbols-outlined"
+            id="shopping-cart-icon"
+            @click="$router.push('/cart')"
+            style="cursor: pointer"
+          >
             shopping_cart
           </span>
-          <button class="login-btn">Login</button>
-          <button class="signup-btn" @click="$router.push('/register')">
-            Register
-          </button>
+
+          <span v-if="!isLoggedIn" style="display: flex; gap: 3px">
+            <button class="login-btn" @click="$router.push('/login')">
+              Login
+            </button>
+            <button class="signup-btn" @click="$router.push('/register')">
+              Register
+            </button>
+          </span>
+          <span v-else>
+            <!-- <button class="profile-btn" @click="$router.push('/profile')"> -->
+            <!-- Profile -->
+            <!-- <i class="material-symbols-outlined">person</i>
+            </button> -->
+            Signed in as {{ userEmail }}
+            <button @click="signout">Sign Out</button>
+          </span>
         </div>
+        <!-- <div class="profile-tab" v-else></div> -->
       </div>
     </nav>
   </div>
 </template>
 
 <script>
+import { authStore } from "@/store";
+import { cartStore } from "@/store/cartStore";
+
 export default {
   data() {
     return {
       display: "none",
       hidden: false,
+      store: authStore(),
+      searchQuery: "",
+      cartStore: cartStore(),
     };
   },
+
   methods: {
     closeRespTab() {
       let navbar = document.getElementById("navbar-cont");
-
-      navbar.style.display = navbar.style.display == "flex" ? "none" : "flex";
+      // alert(this.hidden);
+      if (screen.width < 800) {
+        navbar.style.display = navbar.style.display == "flex" ? "none" : "flex";
+        // this.hidden = true;
+      }
     },
-    // const checkbox = document.getElementById("cbox");
-    //   const close_tab = document.getElementById("close-resp-tab");
     check() {
       let navbar = document.getElementById("navbar-cont");
 
@@ -98,14 +145,58 @@ export default {
     redirectToRegisterPage() {
       this.$router.push({ name: "register" });
     },
+    signout() {
+      this.store.signout();
+      // this.store.user = null;
+      this.$router.push("/");
+    },
+
+    redirectToCart() {
+      this.$router.push("/cart");
+    },
+
+    // Search for items
+    searchItems() {
+      this.cartStore.search_query = this.searchQuery;
+      // console.log(this.cartStore.search_query);
+
+      const data = { search_query: this.searchQuery };
+      fetch("http://localhost:3000/public/php/search_product.php", {
+        method: "POST",
+        body: JSON.stringify(data),
+      })
+        .then((resp) => resp.text())
+        .then((data) => {
+          this.cartStore.searchItems = data;
+        })
+        .catch((error) => console.error(`HTTP ERROR: ${error}`));
+    },
   },
   computed: {
     homePage() {
-      if (this.$route.path == "/register") {
+      if (
+        this.$route.path == "/register" ||
+        this.$route.path == "/product" ||
+        this.$route.path == "/login"
+      ) {
         return false;
       } else {
         return true;
       }
+    },
+
+    isLoggedIn() {
+      return this.store.user ? true : false;
+    },
+
+    userEmail() {
+      return this.isLoggedIn ? this.store.user.email : "Loading...";
+    },
+  },
+
+  watch: {
+    searchQuery: function (val) {
+      this.cartStore.search_query = val;
     },
   },
 };
@@ -130,13 +221,20 @@ ul {
   align-content: space-between;
   align-self: center;
   align-items: center;
+  width: 100%;
   width: 95%;
   gap: 20px;
   box-shadow: 2px 4px 9px 2px rgba(0, 0, 0, 0.44);
   border-radius: 45px;
   margin: 15px auto;
   margin-top: 30px;
+  /* position: fixed; */
+  /* top: 0px; */
+  /* z-index: 100; */
   padding: 12px 8px;
+  /* background-color: #556b2f; */
+
+  /* margin-bottom: calc(1vh); */
 }
 
 .logo {
@@ -162,8 +260,11 @@ ul {
 }
 
 .nav-links a:hover {
-  color: crimson;
+  /* color: crimson; */
+  color: #556b2f;
   /* color: rgb(49, 3, 3); */
+  /* color: white; */
+  /* color: black; */
 }
 
 .navopt-container {
@@ -216,26 +317,38 @@ ul {
   border: none;
   color: white;
   border-radius: 42px;
-  padding: 10px 12px;
-  width: 100px;
-  letter-spacing: 1px;
+  padding: 5px 3px;
+  width: 80px;
+  /* letter-spacing: 1px; */
   font-family: "Ubuntu Mono", monospace;
   font-size: 12px;
+  height: 30px;
 }
 
 .login-btn {
   background-color: transparent;
   /* border: 1px solid #291477ff; */
-  border: 1px solid rgb(49, 3, 3);
+  /* border: 1px solid rgb(49, 3, 3); */
+  border: 1px solid #556b2f;
   color: black;
 }
 
 .signup-btn {
   /* background-color: #291477ff; */
-  background: rgb(49, 3, 3);
+  /* background: rgb(49, 3, 3); */
+  background-color: #556b2f;
 }
 
 .profile-tab *:hover {
+  cursor: pointer;
+}
+
+/* Profile Buttons */
+.profile-btn {
+  border-radius: 50%;
+  border: none;
+  border: 1px solid black;
+  background: transparent;
   cursor: pointer;
 }
 
@@ -333,7 +446,7 @@ ul {
 
     padding: 0;
     margin: 0;
-    height: 40px;
+    height: 30px;
     text-align: center;
     font-size: 19px;
     letter-spacing: 1px;
@@ -404,7 +517,7 @@ ul {
   }
 
   .icon-label :first-child {
-    font-size: 32px;
+    font-size: 20px;
   }
 
   .icon-label:last-child {
@@ -417,7 +530,19 @@ ul {
 }
 
 .nav-links .router-link-exact-active {
-  color: crimson;
-  font-weight: bold;
+  /* color: crimson; */
+  color: #556b2f;
+  /* color: #f5f5dc; */
+  /* font-weight: bold; */
+  /* border: 1px dotted; */
+  padding: 2px 10px;
+  /* margin: 0; */
+  border-radius: 14px;
+  background-color: #556b2f;
+  color: #f5f5f5;
+}
+
+.nav-links .router-link-exact-active:hover {
+  color: white;
 }
 </style>

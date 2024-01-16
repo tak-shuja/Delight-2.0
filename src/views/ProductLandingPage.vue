@@ -1,13 +1,4 @@
 <template>
-  <!-- The Data is {{ data }} -->
-
-  <div class="item" v-for="item in data">
-    <!-- <div class="items1" v-for="dataa in key"> -->
-    id : {{ item.id }} => name: {{ item.item_name }}
-
-    <!-- </div> -->
-  </div>
-
   <div
     class="container-fluid"
     style="
@@ -18,36 +9,12 @@
       align-items: center;
     "
   >
-    <div class="item" v-for="item in fetched_items" v-if="itemsLoaded">
-      <div class="row">
-        <div class="card m-4" v-if="fetched_items.length > 0">
-          <img
-            :src="imgUrl + JSON.parse(item.paths)[0]"
-            alt=""
-            class="card-img"
-            loading="lazy"
-          />
-          <div class="card-heading">
-            <!-- Card Heading -->
-            {{ item.item_name }}
-          </div>
-
-          <div class="card-buttons">
-            <button class="view-item" @click="view_item(item.item_name)">
-              View Item
-              <!-- 🛒 -->
-            </button>
-            <button
-              class="wishlist"
-              :data-code="item.code"
-              @click="this.sendCode(item.code)"
-            >
-              Add to Wishlist
-              <!-- ❤️ -->
-            </button>
-          </div>
-        </div>
-      </div>
+    <div class="item" v-for="item in items" v-if="itemsLoaded">
+      <ProductCard
+        :product="item"
+        class="m-3 my-4"
+        @click="console.log(cartStore.search_query)"
+      />
     </div>
     <div class="msg" v-else>
       <h2>
@@ -61,57 +28,100 @@
 </template>
 
 <script>
-import { useRouter } from "vue-router";
+import { authStore } from "@/store/index";
 
-// const url = "https://delightheaven.in/../src/php/get_items.php";
+import { addToCart } from "@/cart";
+
+import { cartStore } from "@/store/cartStore";
+
+// const url = 'https://delightheaven.in/../src/php/get_items.php';
+
+import ProductCard from "@/components/ProductCard.vue";
 
 export default {
+  components: {
+    ProductCard,
+  },
+
   data() {
     return {
-      router: useRouter(),
-      // url: "https://delightheaven.in/../Old/src/php/get_items.php",
-      url: "server/get_products.php",
+      url: "http://localhost:3000/public/php/get_items.php",
       imgUrl: "https://delightheaven.in/../Old/Upload Data/",
+      // url: 'https://delightheaven.in/../Old/src/php/get_items.php',
 
-      fetched_items: {},
+      fetched_items: [],
       product_name: "",
       noItems: false,
       itemsLoaded: false,
+      cartAPI: "http://localhost:3000/public/php/add_to_cart.php",
+      authStore: authStore(),
+      cartStore: cartStore(),
+      watch_value: null,
+      val: null,
     };
   },
 
   methods: {
     getItems() {
-      // http://localhost:3000/public/server/get_items.php
-
-      // const url = "http://localhost:3000/public/server/get_items.php";
-
       fetch(this.url)
         .then((resp) => resp.json())
         .then((data) => {
           this.fetched_items = data;
+          this.cartStore.searchedItems = data;
           if (data.length) {
             this.noItems = true;
             this.itemsLoaded = true;
           }
-          // console.log(data);
         })
         .catch((error) => console.error(error));
     },
 
-    view_item(product_name) {
-      this.$router.push({ name: "product", query: { id: product_name } });
-      console.log(this.$route);
-      // this.product_name = product_name;
-      // let formatted_product_name = product_name.split(" ").join("+");
-      // //   http://delightheaven.in/Items/index.html?product=Kashmiri+Walnuts
-      // window.location.href = `http://delightheaven.in/Items/index.html?product=${formatted_product_name}`;
+    searchItems() {
+      const data = { search_query: this.cartStore.search_query };
+      fetch("http://localhost:3000/public/php/search_product.php", {
+        method: "POST",
+        body: JSON.stringify(data),
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          // console.log(data);
+          this.cartStore.searchedItems = data;
+          // this.fetched_items = data;
+        })
+        .catch((error) => console.error(`HTTP ERROR: ${error}`));
     },
   },
 
   created() {
     this.getItems();
-    console.log(this.fetched_items);
+  },
+  computed: {
+    fetchedProducts() {
+      console.log("DATA CHANGED");
+      return this.fetched_items;
+    },
+
+    items() {
+      return this.cartStore.searchedItems;
+    },
+  },
+
+  watch: {
+    searchQuery: function (val) {
+      // console.log(val);
+      if (val) {
+        console.log(val);
+        this.searchItems();
+      }
+    },
+
+    "cartStore.search_query": function (val) {
+      if (val) {
+        this.searchItems();
+      } else {
+        this.getItems();
+      }
+    },
   },
 };
 </script>

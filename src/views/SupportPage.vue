@@ -11,6 +11,9 @@
       >
     </p>
   </div>
+  <div>
+    <p></p>
+  </div>
 </template>
 <script>
 export default {};
@@ -22,7 +25,7 @@ div {
   width: 100%;
   padding: auto;
   display: flex;
-  height: 50vh;
+  height: calc(100vh);
   justify-content: center;
   align-items: center;
   flex-direction: column;

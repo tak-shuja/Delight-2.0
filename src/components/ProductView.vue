@@ -181,11 +181,17 @@
               </div>
               <div class="product-card-container25">
                 <label class="product-card-text09">-50%&nbsp;</label>
-                <label class="product-card-text10">$60</label>
+                <label class="product-card-text10"
+                  >${{ productPrice / 2 }}</label
+                >
               </div>
             </div>
             <div class="product-card-container26">
-              <button type="submit" class="product-card-button button">
+              <button
+                type="button"
+                class="product-card-button button"
+                @click="addToCart(product)"
+              >
                 Add To Cart
               </button>
               <button type="button" class="product-card-button1 button">
@@ -205,12 +211,15 @@
 
 <script>
 import FooterView from "./FooterView.vue";
+import { addToCart } from "@/cart/index";
+import { authStore } from "@/store/index";
 export default {
   components: {
     FooterView,
   },
   data() {
     return {
+      product: {},
       productName: "",
       productPrice: "",
       productDesc: "",
@@ -218,13 +227,16 @@ export default {
       selectedImage: null,
       imageUrl: "http://delightheaven.in/../Old/Upload%20Data/",
       itemLoaded: false,
+
+      // Auth
+      authStore: authStore(),
     };
   },
   mounted() {
     this.productName = this.$route.query.id;
-    console.log(this.productName);
+    // console.log(this.productName);
     fetch(
-      `https://delightheaven.in/../Old/src/php/get.php?product=${this.productName}`
+      `http://delightheaven.in/../Old/src/php/get.php?product=${this.productName}`
     )
       .then((resp) => {
         return resp.json();
@@ -233,9 +245,10 @@ export default {
       .then((data) => {
         // console.log(data);
         this.itemLoaded = true;
+        this.product = data;
         this.productName = data.name;
         this.productPrice = data.price;
-        this.productDesc = "";                               //data.desc;
+        this.productDesc = ""; //data.desc;
         this.images = JSON.parse(data.path);
         // console.log(this.images);
         this.selectedImage = this.images[0];
@@ -245,6 +258,32 @@ export default {
   methods: {
     changeActiveImage(image) {
       this.selectedImage = image;
+    },
+
+    // add to cart
+    async addToCart(product) {
+      // this.cartStore.addToCart(product);
+      const result = await addToCart(product, this.authStore, this.isLoggedIn);
+      // console.log(result);
+      if (result) {
+        this.$moshaToast("Item added to cart", {
+          type: "success",
+          showIcon: true,
+          timeout: 1500,
+        });
+      } else {
+        this.$moshaToast("Some error occured", {
+          type: "danger",
+          showIcon: true,
+          timeout: 1500,
+        });
+      }
+    },
+  },
+
+  computed: {
+    isLoggedIn() {
+      return this.authStore.user ? true : false;
     },
   },
 };

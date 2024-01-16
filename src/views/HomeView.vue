@@ -8,7 +8,7 @@
     <ProductGallery />
     <FaqComponent />
     <!-- <CardItemVue /> -->
-    <FooterView />
+    <!-- <FooterView /> -->
   </div>
   <div v-else></div>
 </template>

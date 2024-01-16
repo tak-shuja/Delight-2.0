@@ -1,0 +1,107 @@
+<?php
+
+/*
+
+
+
+
+
+PROCEDURE:
+1. SELECT UID
+2. SELECT ALL FROM ORDERS WITH SIMILAR UID
+
+
+
+
+
+
+
+
+
+*/
+
+$conn = new mysqli('localhost', 'shuja', 'delight@123', 'delight');
+
+// Check for database connection errors
+if ($conn->connect_error) {
+    die(json_encode(array('message' => "Connection failed: " . $conn->connect_error)));
+}
+
+$inputJSON = file_get_contents('php://input');
+$input = json_decode($inputJSON);
+
+$uid = $input->uid;
+
+$sql = "SELECT * FROM users WHERE uid='$uid'";
+$res = $conn->query($sql);
+
+$cart_items = array();
+$order_items = array();
+
+// Check for user query errors
+if (!$res) {
+    die(json_encode(array('message' => "User Select Query Error: " . $conn->error)));
+} else if ($row = $res->fetch_assoc()) {
+    $id = $row['id'];
+
+    // Retrieve orders for the user
+    $sql = "SELECT * FROM orders WHERE userID='$id'";
+    $res = $conn->query($sql);
+
+    // Check for order query errors
+    if (!$res) {
+        die(json_encode(array('message' => "Order Select Query Error: " . $conn->error)));
+    }
+
+    $items = array();
+    while ($row = $res->fetch_assoc()) {
+        $items['product_id'] = $row['product_id'];
+    }
+
+    $grouped_items = array();
+
+    foreach ($items as $item) {
+        $product_id = $item['product_id'];
+
+        $sql = "SELECT * FROM items WHERE product_id='$product_id'";
+        $result = $conn->query($sql);
+
+        // Check for item query errors
+        if (!$result) {
+            die(json_encode(array('message' => "Item Select Query Error: " . $conn->error)));
+        }
+
+
+
+        while ($row = $result->fetch_assoc()) {
+            $order_items[] = $row;
+        }
+
+
+
+
+        $sql = "SELECT * FROM orders WHERE orderCode='$code'";
+        $result = $conn->query($sql);
+
+        // Check for item query errors
+        if (!$result) {
+            die(json_encode(array('message' => "Item Select Query Error: " . $conn->error)));
+        }
+
+
+
+        while ($row = $result->fetch_assoc()) {
+            $cart_items[] = $row;
+            // $cart_items["product"] = str_replace($row["orderID"], "'", "\"");
+            // echo $row["product"];
+        }
+    }
+
+
+
+    echo json_encode($cart_items);
+} else {
+    echo json_encode(array('message' => "User not found"));
+}
+
+$conn->close();
