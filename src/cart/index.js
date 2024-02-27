@@ -48,7 +48,7 @@ function updateCartItems(data) {
   })
     .then((resp) => resp.json())
     .then((data) => {
-      if ((data.status = "Ok")) {
+      if ((data.status == "Ok")) {
         return true;
       } else {
         return false;

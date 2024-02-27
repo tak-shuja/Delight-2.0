@@ -61,6 +61,7 @@
                 "
               />
               <label>{{ validationText }}</label>
+              <label>{{ loginResult }}</label>
               <button
                 type="submit"
                 class="signup-page-button button"

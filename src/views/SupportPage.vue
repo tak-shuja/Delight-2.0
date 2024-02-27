@@ -4,7 +4,10 @@
     <p>
       <a class="fa fa-phone" href="tel:+917006621040"> +91 70066 21040 </a>
 
-      <a class="fa fa-phone" href="tel:+917006621040"> +91 95962 69992 </a>
+      <i class="fa-regular fa-envelope"></i>
+      <a class="fa fa-sharp fa-envelope" href="tel:+917006621040">
+        +91 95962 69992
+      </a>
 
       <a href="https://www.instagram.com/delightdeheaven">
         <i class="fa fa-instagram"></i>Instagram</a

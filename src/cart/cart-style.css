@@ -1,0 +1,188 @@
+.test-div {
+  margin-top: 0;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.test-div * {
+  width: 200px;
+  height: 200px;
+}
+
+.test-div :nth-child(even) {
+  background-color: pink;
+}
+
+.test-div :nth-child(odd) {
+  background-color: skyblue;
+}
+
+* {
+  letter-spacing: 1px;
+}
+
+body {
+  background: linear-gradient(45deg, skyblue, rgb(169, 226, 249), pink);
+}
+.cart-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0;
+  justify-content: space-around;
+  width: 100%;
+  gap: 30px;
+}
+
+.products {
+  display: flex;
+  flex-direction: column;
+  /* width: 90%; */
+  flex-grow: 3;
+  gap: 20px;
+  justify-content: space-evenly;
+  margin: 20px 0;
+  scrollbar-width: 0;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid;
+  border-radius: 12px;
+  gap: 20px;
+  /* width: 30%; */
+  height: min-content;
+  flex-grow: 1;
+  margin: 20px 0;
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.product,
+.product-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+  border-radius: 12px;
+}
+
+.product-item img {
+  width: 130px;
+  border-radius: 12px;
+}
+
+.product-item .name {
+  font-size: 28px;
+}
+
+.qty {
+  font-size: 20px;
+}
+
+.product-card {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.product-card img {
+  width: 130px;
+}
+
+.product-card .item {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 32px;
+  width: 80%;
+  overflow-x: hidden;
+}
+
+.product-card .price {
+  font-size: 30px;
+  color: limegreen;
+}
+
+.name .name-subheading {
+  font-size: 19px;
+  display: inline;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.9);
+  letter-spacing: 1px;
+}
+
+.name {
+  /* border: 1px solid; */
+  display: inline-block;
+  flex-direction: column;
+}
+
+hr {
+  border: 0;
+  /* clear: both; */
+  /* display: block; */
+  width: 96%;
+  background-color: #000;
+  height: 1px;
+}
+
+.total {
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 25px;
+}
+
+.plsbtn,
+.minbtn {
+  width: 35px;
+  height: auto;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.plsbtn {
+  background-color: green;
+  color: white;
+}
+
+.minbtn {
+  background-color: red;
+  color: white;
+}
+
+.qty {
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+.plsbtn:hover {
+  background-color: rgb(0, 150, 0);
+}
+.min:hover {
+  background-color: rgb(255, 0, 0);
+}

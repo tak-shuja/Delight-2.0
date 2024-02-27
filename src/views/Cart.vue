@@ -1,19 +1,8 @@
 <template>
   <div class="userLoggedIn" v-if="isLoggedIn">
-    <!-- <h1>Logged In: {{ isLoggedIn }}</h1>
-    <h2>User email: {{ userEmail }}</h2>
-    <h2>User id: {{ currentUser.uid }}</h2> -->
-
-    <!-- <PopupModal /> -->
     <Toast />
     <ConfirmDialog></ConfirmDialog>
-
-
     <div v-show="!!fetched_items.length">
-      
-
-
-
 <div
   v-for="item in fetched_items"
   style="
@@ -40,7 +29,6 @@
       >ungroup</span
     >
     <img
-      @click="console.log(item.paths[0])"
       :src="imgLink + JSON.parse(item.paths)[0]"
       style="width: 170px; object-fit: cover; aspect-ratio: 3/2"
     />
@@ -136,8 +124,8 @@ export default {
     return {
       fetched_items: [],
       authStore: authStore(),
-      cartStore: cartStore(),
       userLoggedIn: this.isLoggedIn,
+      cartStore: cartStore(),
 
       // Cart Items API
       cartAPI: "http://localhost:3000/public/php/get_cart.php",
@@ -276,7 +264,6 @@ export default {
       if (this.isLoggedIn) {
         for (let item of this.fetched_items) {
           amount += Number.parseInt(item.price) * item.quantity;
-          // amount *= item.quantity;
         }
       }
       return amount;

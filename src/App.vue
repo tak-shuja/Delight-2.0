@@ -68,6 +68,13 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  scroll-behavior: smooth;
+}
+
+.nav-header- {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 
 a {

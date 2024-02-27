@@ -26,6 +26,9 @@ import "mosha-vue-toastify/dist/style.css";
 // Css imports
 import "../public/styles/index.css";
 import "../public/styles/login-page.css";
+import "../public/styles/style.css";
+import "../public/styles/signup-style.css";
+import "../public/styles/cart-style.css";
 
 // pinia stuff
 const pinia = createPinia();
